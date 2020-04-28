@@ -1,0 +1,67 @@
+<!--
+ * Copyright (c) Amur 2020
+ *
+ * Tic Tac Toe HTML file
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+-->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    </head>
+    <body>
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+            <div class="parent-game p-1">
+                <div class="w-100 h-100 home-game">
+                    <header class="w-100 d-flex justify-content-center p-1 bg-green">
+                        <span class="title">Arm Tic Tac Toe</span>
+                    </header>
+                    <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+                        <div>
+                            <div class="p-1">
+                                <button type="button" class="start-btn two-players">Two Players</button>
+                            </div>
+                            <div class="p-1">
+                                <button type="button" class="start-btn with-computer">Computer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 h-100 run-game">
+                    <header class="w-100 d-flex justify-content-between align-items-center p-1 bg-green">
+                        <button type="button" class="back d-flex flex-row flex-nowrap align-items-center px-1 py-1">
+                            <img src="./img/back.png" class="btn-img" alt="back" />
+                            <span>Back</span>
+                        </button>
+                        <span class="title">Arm Tic Tac Toe</span>
+                        <div style="width: 59px"></div>
+                    </header>
+                    <div class="py-1 d-flex justify-content-center align-items-center flex-row w-100">
+                        <div class="d-flex justify-content-center flex-row py-1">
+                            <div class="px-1"> <span class="x-title">X</span> <span class="x-count"></span></div>
+                            <div class="px-1"> <span class="x-title">0</span> <span class="y-count"></span></div>
+                        </div>
+                    </div>
+                    <div class="parent-win-gammer w-100 p-1 d-flex justify-content-center align-items-center flex-row"><span class="win-gammer"></span></div>
+                    <div>Player <span class="player"></span></div>
+                    <div class="game-xo w-100 d-flex flex-wrap flex-row"></div>
+                    <div class="py-1 d-flex justify-content-center flex-row">
+                        <button type="button" class="restart d-flex flex-row flex-nowrap align-items-center px-1 py-1" data-type="0">
+                            <img src="./img/restart.png" class="btn-img" alt="back" />
+                            <span>Restart</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="./js/game.js"></script>
+        <script type="text/javascript" src="./js/run.js"></script>
+    </body>
+</html>
