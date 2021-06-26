@@ -13,10 +13,26 @@
     padding: 0
     user-select: none
 
+.parent
+    min-height: 100vh
+    background-color: #202C39
+
 .parent-game
     width: 300px
-    height: 530px
-    border: 1px solid #000000
+    height: 500px
+    border: 2px solid #000000
+    background-color: #9EED8D
+    border-radius: 10px
+    overflow: hidden
+    display: flex
+    flex-direction: column
+
+.content-game
+    flex: 1 1 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
 
 .py-1
     padding-top: .5rem
@@ -24,6 +40,12 @@
 
 .px-1
     padding-left: .5rem
+    padding-right: .5rem
+
+.pl-1
+    padding-left: .5rem
+
+.pr-1
     padding-right: .5rem
 
 .p-1
@@ -56,26 +78,48 @@
 .align-items-center
     align-items: center
 
-.parent-win-gammer
-    height: 30px
-
-.game-xo
-    border: 1px solid #2e2e2e
-
 .item-xo
     display: flex
     justify-content: center
     align-items: center
     background-color: #FFFFFF
     cursor: pointer
-    border: 1px solid #2e2e2e
+    border: 2px solid #bd7878
+    border-radius: 5px
     user-select: none
+    margin: 5px
     &:hover
         background-color: #e0e0e0
     &[selected="1"]
         cursor: auto
 
 .x-title,
+.y-title,
+.x-player,
+.y-player,
+.win-game-image
+    width: 100%
+    max-width: 20px
+
+.x-player,
+.y-player
+    display: none
+    &.show
+        display: block
+
+.parent-win-gammer,
+.x-count,
+.y-count,
+.player-parent
+    color: #FFFFFF
+    font-weight: 700
+    line-height: 1.7
+    font-size: 25px
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000
+
+.parent-win-gammer
+    height: 35px
+
 .item-xo span
     font-weight: 700
     line-height: 1.9
@@ -87,27 +131,60 @@
     -webkit-text-stroke-color: black
 
 .restart,
-.back
+.back,
+.sound
     cursor: pointer
-    font-weight: 600
+    font-weight: 700
     line-height: 1.7
     color: #FFFFFF
-    background-color: rgb(7, 71, 7)
-    border: 1px solid rgb(12, 78, 12)
+    background-color: #3a686d
+    border: 1px solid #213a3d
     border-radius: 5px
 
-.back
+.back,
+.sound
     padding: 0 5px
+    display: none
+    min-width: 65px
+    min-height: 28px
+    &.show
+        display: flex
+
+.sound-on-off
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: row 
+
+.sound-on-off-img,
+.sound img
+    width: 100%
+    max-width: 20px
+    display: block
+    -webkit-filter: invert(1)
+    filter: invert(1)
+
+.anuther-item
+    display: none
+    width: 59px
+    &.show
+        display: block
 
 .restart:hover,
-.restart:active,
-.restart:focus,
 .back:hover,
-.back:active,
-.back:focus
+.sound:hover
     box-shadow: none
     outline: none
-    background-color: rgb(12, 78, 12)
+    background-color: #213a3d
+
+.restart:active,
+.restart:focus,
+.back:active,
+.back:focus,
+.sound:active,
+.sound:focus
+    box-shadow: none
+    outline: none
 
 .counter
     min-width: 50px
@@ -136,13 +213,34 @@
 .run-game
     display: none
 
-.btn-img
+.rest-img,
+.back-img
     width: 100%
     max-width: 15px
 
-.bg-green
-    background-color: rgb(7, 71, 7)
+.bg-red
+    background-color: #DB2C2C
+
+.bg-red
     .title
-        font-weight: 600
+        font-weight: 700
         line-height: 1.7
         color: #FFFFFF
+        text-align: center
+        flex: 1 1 100%
+        font-size: 20px
+
+.parent-loader-game
+    position: fixed
+    top: 0
+    left: 0
+    display: flex
+    flex-direction: column
+    flex-wrap: nowrap
+    justify-content: center
+    align-items: center
+    width: 100%
+    height: 100vh
+    background-color: #202C39
+    &.hidden
+        display: none

@@ -16,12 +16,106 @@
     let x_count = game.querySelector('.x-count');
     let y_count = game.querySelector('.y-count');
     let win = game.querySelector('.win-gammer');
-    let player = game.querySelector('.player');
     let typeGame = true;
     let selectedItem = true;
     let answers = [];
+    let soundGame = true;
+    window.SoundGame = soundGame;
+    let tic, tac, on, of, click, headling, winAudio, gameOverAudio, noSpiritAudio;
+    let xImageHeadling = game.querySelector('.x-title');
+    let yImageHeadling = game.querySelector('.y-title');
+    let xImagePlayer = game.querySelector('.x-player');
+    let yImagePlayer = game.querySelector('.y-player');
+    let soundImage = game.querySelector('.sound-img');
+    let soundImageHome = game.querySelector('.sound-on-off-img');
+    let soundBtn = game.querySelector('.sound');
+    let soundBtnHome = game.querySelector('.sound-on-off');
+    let backImage = game.querySelector('.back-img');
+    let restImage = game.querySelector('.rest-img');
 
-    function getAnswer(arr){
+    Assets.filesAssets.images = Assets.filesAssets.images.concat([
+        {name: "of", file: 'img/audio_of.svg'},
+        {name: "on", file: 'img/audio_on.svg'},
+        {name: "back", file: 'img/back.png'},
+        {name: "restart", file: 'img/restart.png'},
+        {name: "tic", file: 'img/tic.svg'},
+        {name: "tac", file: 'img/tac.svg'}
+    ]);
+
+    Assets.filesAssets.audios = Assets.filesAssets.audios.concat([
+        {name: "click", file: 'audio/click_item.wav'},
+        {name: "headling", file: 'audio/click_headling.wav'},
+        {name: "win", file: 'audio/win_game.wav'},
+        {name: "gameOver", file: 'audio/game-over.wav'},
+        {name: "noSpirit", file: 'audio/no-spirit.wav'}
+    ]);
+
+    let loader = game.querySelector('.parent-loader-game');
+
+    Assets.load().then( async res => {
+        tic = res.images["tic"];
+        tac = res.images["tac"];
+        restImage.src = res.images["restart"];
+        backImage.src = res.images["back"];
+        on = res.images["on"];
+        of = res.images["of"];
+        click = res.audios["click"];
+        headling = res.audios["headling"];
+        winAudio = res.audios["win"];
+        gameOverAudio = res.audios["gameOver"]
+        noSpiritAudio = res.audios["noSpirit"];
+
+        xImageHeadling.src = tic;
+        yImageHeadling.src = tac;
+
+        xImagePlayer.src = tic;
+        yImagePlayer.src = tac;
+        soundImage.src = soundGame ? on : of;
+        soundImageHome.src = soundGame ? on : of;
+
+        if(!loader.classList.contains('hidden')) {
+            loader.classList.add('hidden');
+        }
+    }).catch(err => {
+        console.log(err);
+    });
+    
+    function soundOnOf(event) {
+        if(!soundGame) {
+            headling.play();
+        }
+
+        soundGame = !soundGame;
+        soundImage.src = soundGame ? on : of;
+        soundImageHome.src = soundGame ? on : of;
+        window.SoundGame = soundGame;
+    };
+
+    soundBtn.addEventListener('click', soundOnOf);
+    soundBtnHome.addEventListener('click', soundOnOf);
+
+    function replacePlayer() {
+        if(!startGame) {
+            return false;
+        }
+        if(xo) {
+            if(!xImagePlayer.classList.contains('show')) {
+                xImagePlayer.classList.add('show');
+            }
+            if(yImagePlayer.classList.contains('show')) {
+                yImagePlayer.classList.remove('show');
+            }
+        }else {
+            if(xImagePlayer.classList.contains('show')) {
+                xImagePlayer.classList.remove('show');
+            }
+            if(!yImagePlayer.classList.contains('show')) {
+                yImagePlayer.classList.add('show');
+            }
+        }
+    };
+
+    function getAnswer(arr) {
         let len = arr.length;
         for(let i = 0; i < len; i++){
             if(!arr[i]){
@@ -111,7 +205,39 @@
 
         if(type.type){
             startGame = !type.type;
-            win.innerText = `Won ${(type.typeX === 1)?('X'):('O')} Player`;
+            let wonSapn = game.createElement('span');
+            wonSapn.classList.add('pr-1');
+            wonSapn.innerText = "Won";
+
+            let playerSapn = game.createElement('span');
+            playerSapn.classList.add('pl-1');
+            playerSapn.innerText = "Player";
+
+            let image = new Image();
+            
+            win.appendChild(wonSapn);
+
+            if(type.typeX === 1) {
+                if(soundGame) {
+                    winAudio.play();
+                }
+
+                image.src = tic;
+            }else {
+                if(!typeGame && soundGame) {
+                    gameOverAudio.play();
+                }else if(typeGame && soundGame) {
+                    winAudio.play();
+                }
+
+                image.src = tac;
+            }
+
+            image.classList.add('win-game-image');
+
+            win.appendChild(image);
+            win.appendChild(playerSapn);
+
             if(type.typeX === 1){
                 let x_counter = parseInt(x_count.innerText);
                 x_count.innerText = ++x_counter;
@@ -121,6 +247,10 @@
             }
         }else{
             if(NoSpirit(item)){
+                if(soundGame) {
+                    noSpiritAudio.play();
+                }
+
                 startGame = !type.type;
                 win.innerText = 'No spirit';
             }else if(!selectedItem){
@@ -128,7 +258,7 @@
             }
         }
 
-        (xo)?(player.innerText = 'X'):(player.innerText = 'O');
+        replacePlayer();
     };
 
     function selectCub(el){
@@ -136,24 +266,31 @@
             let elem = el.target;
             let index = parseInt(elem.getAttribute('index'));
             if(parseInt(elem.getAttribute('selected')) === 0){
+                if(soundGame) {
+                    click.play();
+                }
+
                 withCoputerOrTwoPlyers(index, elem);
             }
         }
     };
 
     function changeItem(index, elem){
+        if(soundGame) {
+            click.play();
+        }
         elem.setAttribute('selected', '1');
-        let span = game.createElement('span');
+        let image = new Image();
         if(xo){
-            span.innerText = 'X';
+            image.src = tic;
             xo = false;
             elem.setAttribute('type', '1');
         }else{
-            span.innerText = 'O';
+            image.src = tac;
             xo = true;
             elem.setAttribute('type', '0');
         }
-        elem.appendChild(span);
+        elem.appendChild(image);
         equaltipes(index);
     }
 
@@ -203,18 +340,24 @@
     };
 
     function createRow(){
+        if(soundGame) {
+            headling.play();
+        }
+
         win.innerText = '';
         parent.innerHTML = '';
         startGame = true;
-        (xo)?(player.innerText = 'X'):(player.innerText = 'O');
+
+        replacePlayer();
+        
         let width = parent.clientWidth / colRow;
         for(let i = 0; i < Math.pow(colRow, 2); i++){
             let parx = game.createElement('div');
             parx.classList.add('item-xo');
             parx.setAttribute('selected', '0');
             parx.setAttribute('index', i);
-            parx.style.width = `${width}px`;
-            parx.style.height = `${width}px`;
+            parx.style.width = `${width - 10}px`;
+            parx.style.height = `${width - 10}px`;
             parx.addEventListener('click', selectCub.bind(this));
             parent.appendChild(parx);
         }
