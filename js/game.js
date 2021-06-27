@@ -34,20 +34,20 @@
     let restImage = game.querySelector('.rest-img');
 
     Assets.filesAssets.images = Assets.filesAssets.images.concat([
-        {name: "of", file: 'img/audio_of.svg'},
-        {name: "on", file: 'img/audio_on.svg'},
-        {name: "back", file: 'img/back.png'},
-        {name: "restart", file: 'img/restart.png'},
-        {name: "tic", file: 'img/tic.svg'},
-        {name: "tac", file: 'img/tac.svg'}
+        {name: "of", file: './img/audio_of.svg'},
+        {name: "on", file: './img/audio_on.svg'},
+        {name: "back", file: './img/back.png'},
+        {name: "restart", file: './img/restart.png'},
+        {name: "tic", file: './img/tic.svg'},
+        {name: "tac", file: './img/tac.svg'}
     ]);
 
     Assets.filesAssets.audios = Assets.filesAssets.audios.concat([
-        {name: "click", file: 'audio/click_item.wav'},
-        {name: "headling", file: 'audio/click_headling.wav'},
-        {name: "win", file: 'audio/win_game.wav'},
-        {name: "gameOver", file: 'audio/game-over.wav'},
-        {name: "noSpirit", file: 'audio/no-spirit.wav'}
+        {name: "click", file: './audio/click_item.wav'},
+        {name: "headling", file: './audio/click_headling.wav'},
+        {name: "win", file: './audio/win_game.wav'},
+        {name: "gameOver", file: './audio/game-over.wav'},
+        {name: "noSpirit", file: './audio/no-spirit.wav'}
     ]);
 
     let loader = game.querySelector('.parent-loader-game');
